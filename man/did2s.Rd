@@ -66,12 +66,12 @@ Calculate two-stage difference-in-differences following Gardner (2021)
 \section{Examples}{
 
 
-Load example dataset which has two treatment groups and homogeneous treatment effects\if{html}{\out{<div class="r">}}\preformatted{# Load Example Dataset
+Load example dataset which has two treatment groups and homogeneous treatment effects\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Load Example Dataset
 data("df_hom")
 }\if{html}{\out{</div>}}
 \subsection{Static TWFE}{
 
-You can run a static TWFE fixed effect model for a simple treatment indicator\if{html}{\out{<div class="r">}}\preformatted{static <- did2s(df_hom,
+You can run a static TWFE fixed effect model for a simple treatment indicator\if{html}{\out{<div class="sourceCode r">}}\preformatted{static <- did2s(df_hom,
     yname = "dep_var", treatment = "treat", cluster_var = "state",
     first_stage = ~ 0 | unit + year,
     second_stage = ~ i(treat, ref=FALSE))
@@ -85,18 +85,20 @@ fixest::esttable(static)
 #>                            static
 #> Dependent Var.:           dep_var
 #>                                  
-#> treat = TRUE    2.025*** (0.0307)
+#> treat = TRUE    2.005*** (0.0202)
 #> _______________ _________________
 #> S.E. type                  Custom
-#> Observations               31,000
-#> R2                        0.31846
-#> Adj. R2                   0.31846
+#> Observations               46,500
+#> R2                        0.47520
+#> Adj. R2                   0.47520
+#> ---
+#> Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 }\if{html}{\out{</div>}}
 }
 
 \subsection{Event Study}{
 
-Or you can use relative-treatment indicators to estimate an event study estimate\if{html}{\out{<div class="r">}}\preformatted{es <- did2s(df_hom,
+Or you can use relative-treatment indicators to estimate an event study estimate\if{html}{\out{<div class="sourceCode r">}}\preformatted{es <- did2s(df_hom,
     yname = "dep_var", treatment = "treat", cluster_var = "state",
     first_stage = ~ 0 | unit + year,
     second_stage = ~ i(rel_year, ref=c(-1, Inf)))
@@ -110,59 +112,61 @@ fixest::esttable(es)
 #>                                es
 #> Dependent Var.:           dep_var
 #>                                  
-#> rel_year = -20   -0.0335 (0.0697)
-#> rel_year = -19    0.0581 (0.0588)
-#> rel_year = -18    0.0348 (0.0578)
-#> rel_year = -17    0.0236 (0.0670)
-#> rel_year = -16    0.0115 (0.0542)
-#> rel_year = -15   -0.0148 (0.0769)
-#> rel_year = -14   0.1150. (0.0613)
-#> rel_year = -13   -0.0108 (0.0720)
-#> rel_year = -12   -0.0727 (0.0635)
-#> rel_year = -11    0.0666 (0.0559)
-#> rel_year = -10    0.0396 (0.0382)
-#> rel_year = -9    -0.0109 (0.0379)
-#> rel_year = -8     0.0105 (0.0388)
-#> rel_year = -7    -0.0001 (0.0445)
-#> rel_year = -6   -0.0829* (0.0388)
-#> rel_year = -5     0.0189 (0.0429)
-#> rel_year = -4    -0.0664 (0.0437)
-#> rel_year = -3    -0.0144 (0.0302)
-#> rel_year = -2     0.0223 (0.0442)
-#> rel_year = 0    2.117*** (0.0622)
-#> rel_year = 1    1.857*** (0.0720)
-#> rel_year = 2    1.986*** (0.0665)
-#> rel_year = 3    2.005*** (0.0708)
-#> rel_year = 4    1.950*** (0.0748)
-#> rel_year = 5    2.038*** (0.0797)
-#> rel_year = 6    2.032*** (0.0732)
-#> rel_year = 7    2.025*** (0.0858)
-#> rel_year = 8    1.976*** (0.0621)
-#> rel_year = 9    2.121*** (0.0619)
-#> rel_year = 10   2.088*** (0.0913)
-#> rel_year = 11   1.943*** (0.1148)
-#> rel_year = 12   1.941*** (0.1131)
-#> rel_year = 13   1.965*** (0.1076)
-#> rel_year = 14   2.023*** (0.0972)
-#> rel_year = 15   2.235*** (0.1174)
-#> rel_year = 16   2.178*** (0.1282)
-#> rel_year = 17   1.936*** (0.1044)
-#> rel_year = 18   2.135*** (0.1115)
-#> rel_year = 19   2.112*** (0.1038)
-#> rel_year = 20   1.925*** (0.1071)
+#> rel_year = -20    0.0043 (0.0322)
+#> rel_year = -19    0.0222 (0.0296)
+#> rel_year = -18   -0.0358 (0.0308)
+#> rel_year = -17    0.0043 (0.0337)
+#> rel_year = -16   -0.0186 (0.0353)
+#> rel_year = -15   -0.0045 (0.0346)
+#> rel_year = -14   -0.0393 (0.0384)
+#> rel_year = -13    0.0453 (0.0323)
+#> rel_year = -12    0.0324 (0.0309)
+#> rel_year = -11   -0.0245 (0.0349)
+#> rel_year = -10   -0.0017 (0.0241)
+#> rel_year = -9     0.0155 (0.0242)
+#> rel_year = -8    -0.0073 (0.0210)
+#> rel_year = -7   -0.0513* (0.0202)
+#> rel_year = -6     0.0269 (0.0237)
+#> rel_year = -5     0.0136 (0.0237)
+#> rel_year = -4    0.0381. (0.0223)
+#> rel_year = -3    -0.0228 (0.0284)
+#> rel_year = -2     0.0041 (0.0228)
+#> rel_year = 0    1.971*** (0.0470)
+#> rel_year = 1    2.050*** (0.0466)
+#> rel_year = 2    2.033*** (0.0441)
+#> rel_year = 3    1.966*** (0.0400)
+#> rel_year = 4    1.965*** (0.0430)
+#> rel_year = 5    2.030*** (0.0456)
+#> rel_year = 6    2.040*** (0.0447)
+#> rel_year = 7    1.995*** (0.0370)
+#> rel_year = 8    2.019*** (0.0485)
+#> rel_year = 9    1.955*** (0.0468)
+#> rel_year = 10   1.950*** (0.0455)
+#> rel_year = 11   2.117*** (0.0664)
+#> rel_year = 12   2.132*** (0.0741)
+#> rel_year = 13   2.019*** (0.0640)
+#> rel_year = 14   2.013*** (0.0522)
+#> rel_year = 15   1.961*** (0.0605)
+#> rel_year = 16   1.916*** (0.0584)
+#> rel_year = 17   1.938*** (0.0607)
+#> rel_year = 18   2.070*** (0.0666)
+#> rel_year = 19   2.066*** (0.0609)
+#> rel_year = 20   1.964*** (0.0612)
 #> _______________ _________________
 #> S.E. type                  Custom
-#> Observations               31,000
-#> R2                        0.31957
-#> Adj. R2                   0.31872
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="r">}}\preformatted{# plot rel_year coefficients and standard errors
+#> Observations               46,500
+#> R2                        0.47577
+#> Adj. R2                   0.47533
+#> ---
+#> Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{# plot rel_year coefficients and standard errors
 fixest::coefplot(es, keep = "rel_year::(.*)")
 }\if{html}{\out{</div>}}
 }
 
 \subsection{Example from Cheng and Hoekstra (2013)}{
 
-Here's an example using data from Cheng and Hoekstra (2013)\if{html}{\out{<div class="r">}}\preformatted{# Castle Data
+Here's an example using data from Cheng and Hoekstra (2013)\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Castle Data
 castle <- haven::read_dta("https://github.com/scunning1975/mixtape/raw/master/castle.dta")
 
 did2s(
@@ -182,7 +186,7 @@ did2s(
 #> Observations: 550 
 #> Standard-errors: Custom 
 #>         Estimate Std. Error t value Pr(>|t|)    
-#> post::1 0.075142    0.03538  2.1239 0.034127 *  
+#> post::1 0.075142    0.03538 2.12387 0.034127 *  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> RMSE: 263.4   Adj. R2: 0.052465
