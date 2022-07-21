@@ -10,9 +10,6 @@
 #'   (never-treated should be zero or NA)
 #' @param xformla A formula for the covariates to include in the model.
 #'   It should be of the form `~ X1 + X2`. Default is NULL.
-#' @param horizon Integer of length two. The first integer is the earliest
-#'   pre-effect to include and the second is the latest post-effect to include.
-#'   Default is all horizons.
 #' @param weights Variable name for estimation weights. This is used in
 #'   estimating Y(0) and also augments treatment effect weights
 #' @param estimator Estimator you would like to use. Use "all" to estimate all.
@@ -24,21 +21,26 @@
 #' \donttest{
 #' out = event_study(
 #'   data = did2s::df_het, yname = "dep_var", idname = "unit",
-#'   tname = "year", gname = "g"
+#'   tname = "year", gname = "g", estimator = "all"
 #' )
 #' plot_event_study(out)
 #' }
 #' @export
 event_study = function(data, yname, idname, gname, tname,
-					   xformla = NULL, horizon = NULL, weights = NULL,
-					   estimator = c("TWFE", "did2s", "did", "impute", "sunab",
-					   			  "staggered", "all")
+					   xformla = NULL, weights = NULL,
+					   estimator = c("all", "TWFE", "did2s", "did", "impute", "sunab",
+					   			  "staggered")
 			   ){
 
 # Check Parameters -------------------------------------------------------------
 
 	# Select estimator
 	estimator <- match.arg(estimator)
+
+	# Display message about estimator's different assumptions
+	if(estimator == "all") {
+		cli::cli_alert_info("Note these estimators rely on different underlying assumptions. See Table 2 of {.url https://arxiv.org/abs/2109.05913} for an overview.")
+	}
 
 	# Test that gname is in tname or 0/NA for untreated
 	if(!all(
@@ -59,6 +61,12 @@ event_study = function(data, yname, idname, gname, tname,
 		)
 	}
 
+	# If `xformla` is included, note
+	if(!is.null(xformla)) {
+		if(estimator %in% c("all", "staggered")) {
+			cli::cli_text("Warning: {.code xformla} is ignored for {.code staggered} estimator")
+		}
+	}
 
 # Setup ------------------------------------------------------------------------
 
@@ -78,8 +86,6 @@ event_study = function(data, yname, idname, gname, tname,
 
 	event_time = unique(data$zz000event_time)
 	event_time = event_time[!is.na(event_time) & is.finite(event_time)]
-	# All horizons
-	if(is.null(horizon)) horizon = event_time
 
 	# Format xformla for inclusion
 	if(!is.null(xformla)) {
@@ -276,8 +282,9 @@ if(estimator %in% c("staggered", "all")) {
 
 #' Plot results of [event_study()]
 #' @param out Output from [event_study()]
-#' @param seperate Logical. Should the estimators be on seperate plots? Default is TRUE.
-#' @param horizon Numeric. Vector of length 2. First element is min and second element is max of event_time to plot
+#' @param separate Logical. Should the estimators be on separate plots? Default is TRUE.
+#' @param horizon Numeric. Vector of length 2. First element is min and
+#'   second element is max of event_time to plot
 #'
 #' @return `plot_event_study` returns a ggplot object that can be fully customized
 #'
@@ -285,7 +292,7 @@ if(estimator %in% c("staggered", "all")) {
 #'
 #' @importFrom rlang .data
 #' @export
-plot_event_study = function(out, seperate = TRUE, horizon = NULL) {
+plot_event_study = function(out, separate = TRUE, horizon = NULL) {
 
 	# Get list of estimators
 	estimators = unique(out$estimator)
@@ -308,8 +315,8 @@ plot_event_study = function(out, seperate = TRUE, horizon = NULL) {
 	out$ci_upper = out$estimate + 1.96 * out$std.error
 
 
-	# position depending on sepreate
-	if(seperate) position = "identity" else position = ggplot2::position_dodge(width = 0.5)
+	# position depending on separate
+	if(separate) position = "identity" else position = ggplot2::position_dodge(width = 0.5)
 
 	# Subset plot if horizon is specified
 	if(!is.null(horizon)) {
@@ -326,14 +333,14 @@ plot_event_study = function(out, seperate = TRUE, horizon = NULL) {
 						 color = .data$estimator,
 						 ymin = .data$ci_lower, ymax = .data$ci_upper)
 		) +
-		{ if(seperate) ggplot2::facet_wrap(~ estimator, scales="free") } +
+		{ if(separate) ggplot2::facet_wrap(~ estimator, scales="free") } +
 		ggplot2::geom_point(position = position) +
 		ggplot2::geom_errorbar(position = position) +
 		ggplot2::geom_vline(xintercept = -0.5, linetype = "dashed") +
 		ggplot2::geom_hline(yintercept = 0, linetype = "dashed") +
 		ggplot2::labs(y = "Point Estimate and 95% Confidence Interval", x = "Event Time", color = "Estimator") +
-		{ if(seperate) ggplot2::scale_y_continuous(limits = y_lims) } +
-		{ if(seperate) ggplot2::scale_x_continuous(limits = x_lims) } +
+		{ if(separate) ggplot2::scale_y_continuous(limits = y_lims) } +
+		{ if(separate) ggplot2::scale_x_continuous(limits = x_lims) } +
 		ggplot2::theme_minimal(base_size = 16) +
 		ggplot2::scale_color_manual(values = color_scale) +
 		ggplot2::guides(
