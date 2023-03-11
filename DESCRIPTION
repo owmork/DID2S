@@ -1,6 +1,6 @@
 Package: did2s
 Title: Two-Stage Difference-in-Differences Following Gardner (2021)
-Version: 0.7.0
+Version: 1.0.0
 Authors@R: 
     c(person(given = "Kyle",
              family = "Butts",
@@ -25,21 +25,21 @@ Description: Estimates Two-way Fixed Effects difference-in-differences/event-stu
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
-Depends: R (>= 3.5.0), fixest (>= 0.10.1)
-Imports: data.table, ggplot2, glue, stats, stringr, rlang, cli, Matrix,
+RoxygenNote: 7.2.3
+Depends: R (>= 2.10), fixest (>= 0.10.1)
+Imports: data.table, ggplot2, glue, stats, stringr, rlang, Matrix,
         Rcpp, did, broom, methods, staggered, didimputation, boot
-URL: http://kylebutts.com/did2s/
+URL: https://kylebutts.github.io/did2s/
 Suggests: rmarkdown, knitr, haven, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 LinkingTo: RcppArmadillo, Rcpp
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2022-07-20 22:53:14 UTC; kylebutts
+Packaged: 2023-03-11 15:39:18 UTC; hannahdenker
 Author: Kyle Butts [aut, cre] (<https://orcid.org/0000-0002-9048-8059>),
   John Gardner [aut] (<https://orcid.org/0000-0002-4028-6862>),
   Grant McDermott [ctb] (<https://orcid.org/0000-0001-7883-8573>),
   Laurent Berge [ctb]
 Maintainer: Kyle Butts <kyle.butts@colorado.edu>
 Repository: CRAN
-Date/Publication: 2022-07-21 09:40:02 UTC
+Date/Publication: 2023-03-11 16:10:02 UTC

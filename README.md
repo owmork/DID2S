@@ -10,7 +10,7 @@ The goal of did2s is to estimate TWFE models without running into the
 problem of staggered treatment adoption.
 
 For common issues, see this issue:
-<https://github.com/kylebutts/did2s/issues/12>
+<https://github.com/kylebutts/did2s/issues/12/>
 
 ## Installation
 
@@ -28,8 +28,7 @@ devtools::install_github("kylebutts/did2s")
 
 ## Two-stage Difference-in-differences (Gardner 2021)
 
-For details on the methodology, view this
-[vignette](http://kylebutts.com/did2s/articles/Two-Stage-Difference-in-Differences.html)
+For details on the methodology, view this [article](https://arxiv.org/abs/2109.05913) that is forthcoming at the R Journal.
 
 To view the documentation, type `?did2s` into the console.
 
@@ -68,7 +67,7 @@ among the groups.
 # Automatically loads fixest
 library(did2s)
 #> Loading required package: fixest
-#> ℹ did2s (v0.7.0). For more information on the methodology, visit <https://www.kylebutts.com/did2s>
+#> ℹ did2s (v0.7.0). For more information on the methodology, visit <https://www.kylebutts.github.io/did2s>
 #> To cite did2s in publications use:
 #> 
 #>   Butts, Kyle (2021).  did2s: Two-Stage Difference-in-Differences
