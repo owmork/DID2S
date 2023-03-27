@@ -1,11 +1,11 @@
-4b9ed0de972c2162e7cd6e63bbf5bcbd *DESCRIPTION
+78f96be8db16c90e682f588862b3c1a4 *DESCRIPTION
 d8fe4ed526279d4446ab918a705096a8 *LICENSE
 2214c1b9cc2c05b7f45e92a1c55da340 *NAMESPACE
-91cace8c14473c6a4247528b5c2c3d01 *NEWS.md
+f083b7a4f148319f64eeff480e4ef7f5 *NEWS.md
 816fe05490daa8ca511c35b9bfa15d6d *R/RcppExports.R
 ee11466010acd4a260053a358622796c *R/data.R
 5af23d8283e222d8d01402900f9d353e *R/did2s-package.R
-e6005b6aeb583b459777348f5f946548 *R/did2s.R
+296b93a5c60728e1fa3ad9f2eba64e8b *R/did2s.R
 6366c473f6bdbd5381c01150299ec226 *R/event_study.R
 67f5c313a9faa375e1f1860e1403157e *R/gen_data.R
 b8a7af1dd0c58a426a8cadd004a09237 *R/utils-data-table.R
@@ -19,7 +19,7 @@ b9386955bfd80fb8d17ebd51e391cff5 *README.md
 1e83e9f0a7a632df62bf421185e42377 *inst/CITATION
 f23ab3350288fd5addb0e4eb69b68ad4 *inst/doc/Two-Stage-Difference-in-Differences.R
 84aae5b049ef22e326fe651d81a0ea6e *inst/doc/Two-Stage-Difference-in-Differences.Rmd
-29e564d4545528d36e7c36bdeabe4069 *inst/doc/Two-Stage-Difference-in-Differences.html
+b76239239324d2cb77dc6a75957d415e *inst/doc/Two-Stage-Difference-in-Differences.html
 49d71102d2cdda3251d8e6e2271778d9 *inst/references.bib
 b6ab5baa2c6fbe437ade8c9ba9517727 *man/castle.Rd
 66cc58795cd3a8d224b5a521561a2e0b *man/df_het.Rd
@@ -43,3 +43,10 @@ e1a1a96796e7de630259a921c6cdae18 *tests/testthat.R
 0d9b656cde056feb476e5a450056dbff *tests/testthat/test-did2s.R
 27db771743b24bf3122d7d78d1d0de1f *tests/testthat/test-event-study.R
 84aae5b049ef22e326fe651d81a0ea6e *vignettes/Two-Stage-Difference-in-Differences.Rmd
+c7c2a601203b48ce02ed265e45b8c96d *vignettes/event_study_cache/html/__packages
+26828c9dabe2f74edbe8c91bfc9ee964 *vignettes/event_study_cache/html/es-alternatives_4ad6c4f6acdb05794f125609acfe3ea7.RData
+d41d8cd98f00b204e9800998ecf8427e *vignettes/event_study_cache/html/es-alternatives_4ad6c4f6acdb05794f125609acfe3ea7.rdb
+76b7641928add4d146a9d98f829bf0f1 *vignettes/event_study_cache/html/es-alternatives_4ad6c4f6acdb05794f125609acfe3ea7.rdx
+9563174c907e877f29579369ed9eff16 *vignettes/event_study_cache/html/es-estimate_6b16af66592d0deb7aeacd7191038c79.RData
+06b173a64f5f76b6d267418dcd3c8b0c *vignettes/event_study_cache/html/es-estimate_6b16af66592d0deb7aeacd7191038c79.rdb
+d725e00556f9e84ceb27dbf01224ca46 *vignettes/event_study_cache/html/es-estimate_6b16af66592d0deb7aeacd7191038c79.rdx

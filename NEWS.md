@@ -1,3 +1,7 @@
+# did2s 1.0.1
+
+- One line change sped-up big datasets something like 15x *facepalm*
+
 # did2s 0.7.0
 
 - Add `ARMA_64_BIT` for larger matricies

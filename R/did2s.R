@@ -153,7 +153,7 @@ did2s <- function(data, yname, first_stage, second_stage, treatment, cluster_var
     } else {
       weights_vector <- sqrt(data[[weights]])
     }
-
+    
     # Extract first stage
     first_u <- est$first_u
     if (!is.null(removed_rows)) first_u <- first_u[removed_rows]
@@ -173,7 +173,7 @@ did2s <- function(data, yname, first_stage, second_stage, treatment, cluster_var
 
     # x10 is matrix used to estimate first stage (zero out rows with D_it = 1)
     x10 <- x1
-    x10[data[[treatment]] == 1L, ] <- 0
+    x10@x[x10@i %in% data[[treatment]] == 1L] <- 0
 
     # x2'x1 (x10'x10)^-1
     V <- make_V(x1, x10, x2)
@@ -183,15 +183,21 @@ did2s <- function(data, yname, first_stage, second_stage, treatment, cluster_var
     nrow <- nrow(data)
 
     # W_g = X_2g' e_2g - (X_2' X_12) (X_11' X_11)^-1 X_11g' e_1g
-    # W_g = X_2g' e_2g - V X_11g' e_1g
+    #     = X_2g' e_2g - V X_11g' e_1g
     meat <- lapply(unique(cl), function(cl_id) {
+      x2_g = make_g(x2, cl, cl_id)
+      x10_g = make_g(x10, cl, cl_id)
+      first_u_g = make_g(first_u, cl, cl_id)
+      second_u_g = make_g(second_u, cl, cl_id)
+
+      # call to C++
       make_meat(
-        make_g(x2, cl, cl_id), make_g(x10, cl, cl_id),
-        make_g(first_u, cl, cl_id), make_g(second_u, cl, cl_id), V
+        x2_g, x10_g, first_u_g, second_u_g, V
       )
     })
-
+    
     meat_sum <- Reduce("+", meat)
+    
     # (X_2'X_2)^-1 (sum W_g W_g') (X_2'X_2)^-1
     cov <- make_sandwich(x2, meat_sum)
   }
