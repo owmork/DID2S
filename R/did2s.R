@@ -268,7 +268,7 @@ did2s <- function(data, yname, first_stage, second_stage, treatment, cluster_var
     #   ssc = ssc(adj = FALSE, t.df = G-1)
     # )
     list(
-      first_stage = summary(est$first_stage),
+      first_stage = summary(est$first_stage, cluster = cluster_var),
       second_stage = summary(est$second_stage, .vcov = cov)
       )
   ))
