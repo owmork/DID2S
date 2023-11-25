@@ -1,39 +1,39 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# did2s_oli_oli
+# DID2S_oli
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of did2s_oli_oli is to estimate TWFE models without running into the
+The goal of DID2S_oli is to estimate TWFE models without running into the
 problem of staggered treatment adoption.
 
 For common issues, see this issue:
-<https://github.com/kylebutts/did2s_oli/issues/12>
+<https://github.com/kylebutts/DID2S/issues/12>
 
 ## Installation
 
-You can install did2s_oli from CRAN with:
+You can install DID2S from CRAN with:
 
 ``` r
-install.packages("did2s_oli")
+install.packages("DID2S")
 ```
 
 To install the development version, run the following:
 
 ``` r
-devtools::install_github("kylebutts/did2s_oli")
+devtools::install_github("kylebutts/DID2S")
 ```
 
 ## Two-stage Difference-in-differences (Gardner 2021)
 
 For details on the methodology, view this
-[vignette](https://kylebutts.github.io/did2s_oli/articles/Two-Stage-Difference-in-Differences.html)
+[vignette](https://kylebutts.github.io/DID2S/articles/Two-Stage-Difference-in-Differences.html)
 
-To view the documentation, type `?did2s_oli` into the console.
+To view the documentation, type `?DID2S` into the console.
 
-The main function is `did2s_oli` which estimates the two-stage did
+The main function is `DID2S` which estimates the two-stage did
 procedure. This function requires the following options:
 
 - `yname`: the outcome variable
@@ -55,7 +55,7 @@ Optional options:
 - `n_bootstraps`: How many clustered bootstraps to perform for standard
   errors. Default is 250.
 
-did2s_oli returns a list with two objects:
+DID2S returns a list with two objects:
 
 1.  fixest estimate for the second stage with corrected standard errors.
 
@@ -67,26 +67,26 @@ among the groups.
 ``` r
 
 # Automatically loads fixest
-library(did2s_oli)
+library(DID2S)
 #> Loading required package: fixest
-#> did2s_oli (v1.0.2). For more information on the methodology, visit <https://www.kylebutts.github.io/did2s_oli>
+#> DID2S (v1.0.2). For more information on the methodology, visit <https://www.kylebutts.github.io/DID2S>
 #> 
-#> To cite did2s_oli in publications use:
+#> To cite DID2S in publications use:
 #> 
-#>   Butts, Kyle (2021).  did2s_oli: Two-Stage Difference-in-Differences
+#>   Butts, Kyle (2021).  DID2S: Two-Stage Difference-in-Differences
 #>   Following Gardner (2021). R package version 1.0.2.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {did2s_oli: Two-Stage Difference-in-Differences Following Gardner (2021)},
+#>     title = {DID2S: Two-Stage Difference-in-Differences Following Gardner (2021)},
 #>     author = {Kyle Butts},
 #>     year = {2021},
-#>     url = {https://github.com/kylebutts/did2s_oli/},
+#>     url = {https://github.com/kylebutts/DID2S/},
 #>   }
 
 # Load Data from R package
-data("df_het", package = "did2s_oli")
+data("df_het", package = "DID2S")
 ```
 
 Here is a plot of the average outcome variable for each of the groups:
@@ -129,14 +129,14 @@ Example data with heterogeneous treatment effects
 First, lets estimate a static did. There are two things to note here.
 First, note that I can use `fixest::feols` formula including the `|` for
 specifying fixed effects and `fixest::i` for improved factor variable
-support. Second, note that `did2s_oli` returns a `fixest` estimate object,
+support. Second, note that `DID2S` returns a `fixest` estimate object,
 so `fixest::etable`, `fixest::coefplot`, and `fixest::iplot` all work as
 expected.
 
 ``` r
 
 # Static
-static <- did2s_oli(df_het, 
+static <- DID2S(df_het, 
                 yname = "dep_var", first_stage = ~ 0 | state + year, 
                 second_stage = ~i(treat, ref=FALSE), treatment = "treat", 
                 cluster_var = "state")
@@ -169,7 +169,7 @@ second stage formula.
 ``` r
 
 # Event Study
-es <- did2s_oli(df_het,
+es <- DID2S(df_het,
             yname = "dep_var", first_stage = ~ 0 | state + year, 
             second_stage = ~i(rel_year, ref=c(-1, Inf)), treatment = "treat", 
             cluster_var = "state")
@@ -229,20 +229,20 @@ If you use this package to produce scientific or commercial
 publications, please cite according to:
 
 ``` r
-citation(package = "did2s_oli")
+citation(package = "DID2S")
 #> 
-#> To cite did2s_oli in publications use:
+#> To cite DID2S in publications use:
 #> 
-#>   Butts, Kyle (2021).  did2s_oli: Two-Stage Difference-in-Differences
+#>   Butts, Kyle (2021).  DID2S: Two-Stage Difference-in-Differences
 #>   Following Gardner (2021). R package version 1.0.2.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {did2s_oli: Two-Stage Difference-in-Differences Following Gardner (2021)},
+#>     title = {DID2S: Two-Stage Difference-in-Differences Following Gardner (2021)},
 #>     author = {Kyle Butts},
 #>     year = {2021},
-#>     url = {https://github.com/kylebutts/did2s_oli/},
+#>     url = {https://github.com/kylebutts/DID2S/},
 #>   }
 ```
 
