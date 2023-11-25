@@ -1,6 +1,7 @@
 # did2s_oli 1.0.2
 
 - Huge speedup with many fixed effects with the assist from @etiennebacher
+- Only rename to did2s_oli
 
 # did2s_oli 1.0.1
 
